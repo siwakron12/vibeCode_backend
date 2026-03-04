@@ -49,7 +49,7 @@ Return ONLY valid JSON.
 `;
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,11 +65,11 @@ Return ONLY valid JSON.
     }
   );
 
-  if (!response.ok) {
-    const errText = await response.text();
-    console.error("Gemini API error:", errText);
-    throw new Error("Gemini API request failed");
-  }
+if (!response.ok) {
+  const errorJson = await response.json();
+  console.error("Gemini full error:", JSON.stringify(errorJson, null, 2));
+  throw new Error(errorJson.error?.message || "Gemini failed");
+}
 
   const data = await response.json();
 
