@@ -6,7 +6,9 @@ import examRouter from "./routes/exam.js";
 const app = express();
 const port = config.port;
 
-app.use(cors({ origin: config.corsOrigin }));
+app.use(cors({
+  origin: true
+}));
 app.use(express.json());
 
 app.get("/health", (_req, res) => {
